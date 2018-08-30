@@ -14,7 +14,7 @@ std::string out_path;
 void run_one_frame() {
     size_t samples = 35112;
     long unsigned int audioBuffer[35112 + 2064];
-    gameboy.runFor(0, 0, &audioBuffer[0], samples);
+    gameboy.runFor(0, 0, (uint_least32_t*)&audioBuffer[0], samples);
 }
 
 void wait(float seconds) {
@@ -101,8 +101,8 @@ void make_out_path(const char* in_path) {
     out_path = in_path;
     // .gb => .s
     out_path.replace(out_path.end() - 2, out_path.end(), "s");
-    out_path.replace(out_path.begin(), out_path.begin() + out_path.rfind('/') + 1, "");
-    out_path.replace(out_path.begin(), out_path.begin() + out_path.rfind('\\') + 1, "");
+    out_path.replace(out_path.begin(), out_path.begin() + (out_path.rfind('/') + 1), "");
+    out_path.replace(out_path.begin(), out_path.begin() + (out_path.rfind('\\') + 1), "");
     printf("Recording to '%s'\n", out_path.c_str());
 }
 
